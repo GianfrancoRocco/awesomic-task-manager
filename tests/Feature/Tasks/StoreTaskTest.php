@@ -23,7 +23,6 @@ class StoreTaskTest extends TestCase
 
         $this
             ->postJson('/api/tasks', $data)
-            ->dump()
             ->assertCreated();
 
         $this->assertDatabaseHas(Task::class, [
