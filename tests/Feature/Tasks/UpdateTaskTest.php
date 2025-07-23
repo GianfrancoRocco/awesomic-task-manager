@@ -8,6 +8,7 @@ use App\Enums\TaskStatus;
 use App\Models\Task;
 use Database\Factories\TaskFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class UpdateTaskTest extends TestCase
@@ -28,7 +29,15 @@ class UpdateTaskTest extends TestCase
 
         $this
             ->putJson("/api/tasks/{$task->id}", $data)
-            ->assertOk();
+            ->assertOk()
+            ->assertJson(fn (AssertableJson $json) => $json
+                ->has('data', fn (AssertableJson $json) => $json
+                    ->where('id', $task->id)
+                    ->where('title', $data['title'])
+                    ->where('description', $data['description'])
+                    ->where('status', $data['status'])
+                )
+            );
 
         $this->assertDatabaseHas(Task::class, [
             'id' => $task->id,

@@ -6,6 +6,7 @@ namespace Tests\Feature\Tasks;
 
 use Database\Factories\TaskFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class GetTaskTest extends TestCase
@@ -18,6 +19,14 @@ class GetTaskTest extends TestCase
 
         $this
             ->getJson("/api/tasks/{$task->id}")
-            ->assertOk();
+            ->assertOk()
+            ->assertJson(fn (AssertableJson $json) => $json
+                ->has('data', fn (AssertableJson $json) => $json
+                    ->where('id', $task->id)
+                    ->where('title', $task->title)
+                    ->where('description', $task->description)
+                    ->where('status', $task->status)
+                )
+            );
     }
 }
