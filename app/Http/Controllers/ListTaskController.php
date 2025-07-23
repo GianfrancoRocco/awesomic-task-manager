@@ -6,13 +6,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class ListTaskController extends Controller
 {
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(Request $request): JsonResource
     {
-        return response()->json(TaskResource::collection(Task::all()));
+        return TaskResource::collection(Task::all());
     }
 }

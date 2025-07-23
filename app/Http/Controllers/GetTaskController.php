@@ -6,12 +6,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class GetTaskController extends Controller
 {
-    public function __invoke(Task $task): JsonResponse
+    public function __invoke(Task $task): JsonResource
     {
-        return response()->json(TaskResource::make($task));
+        return TaskResource::make($task);
     }
 }

@@ -6,14 +6,17 @@ use App\Actions\UpdateTaskAction;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class UpdateTaskController extends Controller
 {
-    public function __invoke(UpdateTaskRequest $request, Task $task, UpdateTaskAction $action): JsonResponse
-    {
+    public function __invoke(
+        UpdateTaskRequest $request,
+        Task $task,
+        UpdateTaskAction $action
+    ): JsonResource {
         $task = $action->execute($task, $request->toDto());
 
-        return response()->json(TaskResource::make($task));
+        return TaskResource::make($task);
     }
 }

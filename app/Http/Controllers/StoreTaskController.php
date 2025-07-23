@@ -15,6 +15,6 @@ class StoreTaskController extends Controller
     {
         $task = $action->execute($request->toDto());
 
-        return response()->json(TaskResource::make($task), JsonResponse::HTTP_CREATED);
+        return TaskResource::make($task)->response()->setStatusCode(JsonResponse::HTTP_CREATED);
     }
 }
