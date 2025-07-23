@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\DeleteTaskController;
 use App\Http\Controllers\GetTaskController;
+use App\Http\Controllers\ListTaskController;
 use App\Http\Controllers\StoreTaskController;
 use App\Http\Controllers\UpdateTaskController;
 use Illuminate\Support\Facades\Route;
@@ -11,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('/tasks')
     ->name('tasks.')
     ->group(function () {
+        Route::get('/', ListTaskController::class)->name('index');
+
         Route::post('/', StoreTaskController::class)->name('store');
 
         Route::get('/{task}', GetTaskController::class)->name('show');
