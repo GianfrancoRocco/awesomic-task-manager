@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-use App\Http\Controllers\DeleteTaskController;
-use App\Http\Controllers\GetTaskController;
-use App\Http\Controllers\ListTaskController;
-use App\Http\Controllers\StoreTaskController;
-use App\Http\Controllers\UpdateTaskController;
+use App\Http\Controllers\Api\{
+    DeleteTaskController,
+    GetTaskController,
+    ListTaskController,
+    StoreTaskController,
+    UpdateTaskController
+};
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/tasks')
