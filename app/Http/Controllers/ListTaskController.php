@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\ListTaskAction;
+use App\Http\Requests\ListTaskRequest;
 use App\Http\Resources\TaskResource;
-use App\Models\Task;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ListTaskController extends Controller
 {
-    public function __invoke(Request $request): JsonResource
+    public function __invoke(ListTaskRequest $request, ListTaskAction $action): JsonResource
     {
-        return TaskResource::collection(Task::all());
+        $tasks = $action->execute($request->toDto());
+
+        return TaskResource::collection($tasks);
     }
 }
