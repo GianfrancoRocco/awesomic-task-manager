@@ -88,6 +88,149 @@ http://localhost/api/documentation
 
 All routes are documented using separate OpenAPI PHP files to keep controllers clean.
 
+## 📬 Sample API Requests
+
+### ✅ Create a Task
+
+```http
+POST /api/tasks
+```
+
+Request:
+
+```bash
+curl -X POST http://localhost/api/tasks \
+  -H "Content-Type: application/json" \
+  -d '{
+        "title": "Prepare Awesomic Task",
+        "description": "Complete the technical assignment",
+        "due_date": "2025-07-25"
+      }'
+```
+
+Response:
+
+```json
+{
+  "data": {
+    "id": 1,
+    "title": "Prepare Awesomic Task",
+    "description": "Complete the technical assignment",
+    "status": "pending",
+    "created_at": "...",
+    "updated_at": "..."
+  }
+}
+```
+
+### 📋 List All Tasks
+
+```http
+GET /api/tasks
+```
+
+Request:
+
+```bash
+curl -X GET http://localhost/api/tasks
+```
+
+Response:
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "title": "Prepare Awesomic Task",
+      "description": "Complete the technical assignment",
+      "status": "pending",
+      "created_at": "...",
+      "updated_at": "..."
+    }
+  ]
+}
+```
+
+### 🔍 Get a Single Task
+
+Endpoint:
+
+```http
+GET /api/tasks/{id}
+```
+
+Request:
+
+```bash
+curl -X GET http://localhost/api/tasks/1
+```
+
+Response:
+
+```json
+{
+  "data": {
+    "id": 1,
+    "title": "Prepare Awesomic Task",
+    "description": "Complete the technical assignment",
+    "status": "pending",
+    "created_at": "...",
+    "updated_at": "..."
+  }
+}
+```
+
+### ✏️ Update a Task
+
+Endpoint:
+
+```http
+PUT /api/tasks/{id}
+```
+
+Request:
+
+```bash
+curl -X PUT http://localhost/api/tasks/1 \
+  -H "Content-Type: application/json" \
+  -d '{
+        "status": "done"
+      }'
+```
+
+Response:
+
+```json
+{
+  "data": {
+    "id": 1,
+    "title": "Prepare Awesomic Task",
+    "description": "Complete the technical assignment",
+    "status": "done",
+    "created_at": "...",
+    "updated_at": "..."
+  }
+}
+```
+
+### 🗑️ Delete a Task
+
+Endpoint:
+
+```http
+DELETE /api/tasks/{id}
+```
+
+Request:
+
+```bash
+curl -X DELETE http://localhost/api/tasks/1
+```
+
+Response:
+Responds with 204 No Content.
+
 ## 📁 Project Structure Highlights
 
 ```bash
