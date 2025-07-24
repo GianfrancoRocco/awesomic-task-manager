@@ -104,7 +104,7 @@ curl -X POST http://localhost/api/tasks \
   -d '{
         "title": "Prepare Awesomic Task",
         "description": "Complete the technical assignment",
-        "due_date": "2025-07-25"
+        "status": "pending"
       }'
 ```
 
