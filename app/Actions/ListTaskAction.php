@@ -12,6 +12,13 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ListTaskAction
 {
+    /**
+     * @param ListTaskDto $data
+     * 
+     * @see https://spatie.be/docs/laravel-query-builder/v6/introduction Package that could be used to take care of sorting & filtering logic more elegantly
+     * 
+     * @return Collection<int, Task>
+     */
     public function execute(ListTaskDto $data): Collection
     {
         return Task::query()
