@@ -9,6 +9,7 @@ namespace App\Swagger\Schemas;
  *     schema="Task",
  *     type="object",
  *     required={"id", "title", "status"},
+ *
  *     @OA\Property(property="id", type="integer", example=1),
  *     @OA\Property(property="title", type="string", example="Finish docs"),
  *     @OA\Property(property="description", type="string", example="Write Swagger docs for tasks", nullable=true),
@@ -21,6 +22,7 @@ namespace App\Swagger\Schemas;
  *     schema="TaskCreateRequest",
  *     type="object",
  *     required={"title", "status"},
+ *
  *     @OA\Property(property="title", type="string", maxLength=255, example="Write report"),
  *     @OA\Property(property="description", type="string", nullable=true, example="Q3 performance analysis"),
  *     @OA\Property(property="status", type="string", enum={"pending", "in_progress", "done"}, example="pending")
@@ -30,9 +32,12 @@ namespace App\Swagger\Schemas;
  *     schema="TaskUpdateRequest",
  *     type="object",
  *     required={"title", "status"},
+ *
  *     @OA\Property(property="title", type="string", maxLength=255, example="Write updated report"),
  *     @OA\Property(property="description", type="string", nullable=true, example="Updated Q3 analysis"),
  *     @OA\Property(property="status", type="string", enum={"pending", "in_progress", "done"}, example="done")
  * )
  */
-class TaskSchemas {}
+class TaskSchemas
+{
+}

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Feature\Tasks;
 
 use App\Enums\TaskStatus;
-use App\Http\Resources\TaskResource;
 use Database\Factories\TaskFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -22,8 +21,12 @@ class ListTaskTest extends TestCase
         $this
             ->getJson('/api/tasks')
             ->assertOk()
-            ->assertJson(fn (AssertableJson $json) => $json
-                ->has('data', 10, fn (AssertableJson $json) => $json
+            ->assertJson(
+                fn (AssertableJson $json) => $json
+                ->has(
+                    'data',
+                    10,
+                    fn (AssertableJson $json) => $json
                     ->hasAll('id', 'title', 'description', 'status', 'created_at', 'updated_at')
                 )
             );
@@ -42,8 +45,12 @@ class ListTaskTest extends TestCase
         $this
             ->getJson('/api/tasks?status=' . TaskStatus::Done->value)
             ->assertOk()
-            ->assertJson(fn (AssertableJson $json) => $json
-                ->has('data', 5, fn (AssertableJson $json) => $json
+            ->assertJson(
+                fn (AssertableJson $json) => $json
+                ->has(
+                    'data',
+                    5,
+                    fn (AssertableJson $json) => $json
                     ->where('status', TaskStatus::Done)
                     ->etc()
                 )
@@ -69,8 +76,11 @@ class ListTaskTest extends TestCase
         $this
             ->getJson('/api/tasks?statusSort=asc')
             ->assertOk()
-            ->assertJson(fn (AssertableJson $json) => $json
-                ->has('data.0', fn (AssertableJson $json) => $json
+            ->assertJson(
+                fn (AssertableJson $json) => $json
+                ->has(
+                    'data.0',
+                    fn (AssertableJson $json) => $json
                     ->where('status', TaskStatus::Done)
                     ->etc()
                 )
@@ -80,8 +90,11 @@ class ListTaskTest extends TestCase
         $this
             ->getJson('/api/tasks?statusSort=desc')
             ->assertOk()
-            ->assertJson(fn (AssertableJson $json) => $json
-                ->has('data.0', fn (AssertableJson $json) => $json
+            ->assertJson(
+                fn (AssertableJson $json) => $json
+                ->has(
+                    'data.0',
+                    fn (AssertableJson $json) => $json
                     ->where('status', TaskStatus::Pending)
                     ->etc()
                 )

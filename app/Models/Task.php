@@ -9,13 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 /**
- * @property int $id
- * @property string $title
+ * @property int         $id
+ * @property string      $title
  * @property string|null $description
- * @property TaskStatus $status
- * @property Carbon $created_at
- * @property Carbon $updated_at
- * 
+ * @property TaskStatus  $status
+ * @property Carbon      $created_at
+ * @property Carbon      $updated_at
+ *
  * @mixin Model
  */
 class Task extends Model

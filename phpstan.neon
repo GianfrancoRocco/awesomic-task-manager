@@ -1,0 +1,8 @@
+includes:
+    - ./vendor/worksome/coding-style/larastan.neon
+
+parameters:
+    paths:
+        - app
+
+    level: 9

@@ -20,8 +20,11 @@ class GetTaskTest extends TestCase
         $this
             ->getJson("/api/tasks/{$task->id}")
             ->assertOk()
-            ->assertJson(fn (AssertableJson $json) => $json
-                ->has('data', fn (AssertableJson $json) => $json
+            ->assertJson(
+                fn (AssertableJson $json) => $json
+                ->has(
+                    'data',
+                    fn (AssertableJson $json) => $json
                     ->where('id', $task->id)
                     ->where('title', $task->title)
                     ->where('description', $task->description)

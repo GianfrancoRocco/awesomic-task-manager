@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Actions\UpdateTaskAction;
@@ -14,7 +16,7 @@ class UpdateTaskController extends Controller
     public function __invoke(
         UpdateTaskRequest $request,
         Task $task,
-        UpdateTaskAction $action
+        UpdateTaskAction $action,
     ): JsonResource {
         $task = $action->execute($task, $request->toDto());
 

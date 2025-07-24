@@ -8,11 +8,11 @@ use App\Enums\TaskStatus;
 use App\Models\Task;
 use Closure;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
 use Illuminate\Testing\Fluent\AssertableJson;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\RequestFactories\StoreTaskRequest;
 use Tests\TestCase;
-use Illuminate\Support\Str;
 
 class StoreTaskTest extends TestCase
 {
@@ -23,14 +23,17 @@ class StoreTaskTest extends TestCase
         $data = [
             'title' => 'Finish Task Manager for Awesomic!',
             'description' => 'Create a really cool project with awesome code',
-            'status' => TaskStatus::InProgress
+            'status' => TaskStatus::InProgress,
         ];
 
         $this
             ->postJson('/api/tasks', $data)
             ->assertCreated()
-            ->assertJson(fn (AssertableJson $json) => $json
-                ->has('data', fn (AssertableJson $json) => $json
+            ->assertJson(
+                fn (AssertableJson $json) => $json
+                ->has(
+                    'data',
+                    fn (AssertableJson $json) => $json
                     ->has('id')
                     ->where('title', $data['title'])
                     ->where('description', $data['description'])
@@ -64,25 +67,25 @@ class StoreTaskTest extends TestCase
                 'data' => fn (): array => StoreTaskRequest::new()->create(['title' => null]),
                 'errors' => [
                     'title' => [
-                        'The title field is required.'
-                    ]
-                ]
+                        'The title field is required.',
+                    ],
+                ],
             ],
             [
                 'data' => fn (): array => StoreTaskRequest::new()->create(['title' => Str::random(256)]),
                 'errors' => [
                     'title' => [
-                        'The title field must not be greater than 255 characters.'
-                    ]
-                ]
+                        'The title field must not be greater than 255 characters.',
+                    ],
+                ],
             ],
             [
                 'data' => fn (): array => StoreTaskRequest::new()->create(['status' => 'invalid']),
                 'errors' => [
                     'status' => [
-                        'The selected status is invalid.'
-                    ]
-                ]
+                        'The selected status is invalid.',
+                    ],
+                ],
             ],
         ];
     }

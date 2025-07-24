@@ -19,6 +19,7 @@
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
         "phpunit/phpunit": "^11.5.3",
+        "worksome/coding-style": "^3.2",
         "worksome/request-factories": "^3.4"
     },
     "autoload": {
@@ -56,7 +57,13 @@
         "test": [
             "@php artisan config:clear --ansi",
             "@php artisan test"
-        ]
+        ],
+        "ecs": "vendor/bin/ecs",
+        "ecs:fix": "vendor/bin/ecs --fix",
+        "phpstan": "vendor/bin/phpstan analyse",
+        "rector": "vendor/bin/rector process --dry-run --ansi",
+        "rector:fix": "vendor/bin/rector process --ansi",
+        "fixer": "composer ecs:fix && composer phpstan && composer rector:fix"
     },
     "extra": {
         "laravel": {
@@ -68,8 +75,10 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
             "pestphp/pest-plugin": true,
-            "php-http/discovery": true
+            "php-http/discovery": true,
+            "worksome/coding-style": true
         }
     },
     "minimum-stability": "stable",
