@@ -40,6 +40,7 @@ class UpdateTaskTest extends TestCase
                     ->where('title', $data['title'])
                     ->where('description', $data['description'])
                     ->where('status', $data['status'])
+                    ->etc()
                 )
             );
 

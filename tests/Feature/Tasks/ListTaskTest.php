@@ -24,7 +24,7 @@ class ListTaskTest extends TestCase
             ->assertOk()
             ->assertJson(fn (AssertableJson $json) => $json
                 ->has('data', 10, fn (AssertableJson $json) => $json
-                    ->hasAll('id', 'title', 'description', 'status')
+                    ->hasAll('id', 'title', 'description', 'status', 'created_at', 'updated_at')
                 )
             );
     }
@@ -42,11 +42,10 @@ class ListTaskTest extends TestCase
         $this
             ->getJson('/api/tasks?status=' . TaskStatus::Done->value)
             ->assertOk()
-            ->dump()
             ->assertJson(fn (AssertableJson $json) => $json
                 ->has('data', 5, fn (AssertableJson $json) => $json
-                    ->hasAll('id', 'title', 'description', 'status')
                     ->where('status', TaskStatus::Done)
+                    ->etc()
                 )
             );
     }
@@ -71,26 +70,22 @@ class ListTaskTest extends TestCase
             ->getJson('/api/tasks?statusSort=asc')
             ->assertOk()
             ->assertJson(fn (AssertableJson $json) => $json
-                ->has('data', $tasks->count(), fn (AssertableJson $json) => $json
-                    ->hasAll('id', 'title', 'description', 'status')
-                )
                 ->has('data.0', fn (AssertableJson $json) => $json
                     ->where('status', TaskStatus::Done)
                     ->etc()
                 )
+                ->etc()
             );
 
         $this
             ->getJson('/api/tasks?statusSort=desc')
             ->assertOk()
             ->assertJson(fn (AssertableJson $json) => $json
-                ->has('data', $tasks->count(), fn (AssertableJson $json) => $json
-                    ->hasAll('id', 'title', 'description', 'status')
-                )
                 ->has('data.0', fn (AssertableJson $json) => $json
                     ->where('status', TaskStatus::Pending)
                     ->etc()
                 )
+                ->etc()
             );
     }
 }

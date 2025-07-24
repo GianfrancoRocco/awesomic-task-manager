@@ -26,6 +26,8 @@ class GetTaskTest extends TestCase
                     ->where('title', $task->title)
                     ->where('description', $task->description)
                     ->where('status', $task->status)
+                    ->where('created_at', $task->created_at->toISOString())
+                    ->where('updated_at', $task->updated_at->toISOString())
                 )
             );
     }

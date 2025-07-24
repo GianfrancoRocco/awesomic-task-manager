@@ -1,0 +1,322 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Task Management API",
+        "description": "API for managing tasks including create, update, list, view, and delete operations.",
+        "contact": {
+            "name": "Support Team",
+            "email": "support@example.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost/api",
+            "description": "Local development server"
+        }
+    ],
+    "paths": {
+        "/tasks": {
+            "get": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "List tasks",
+                "description": "Returns a list of tasks, optionally filtered or sorted by status.",
+                "operationId": "deebf6d221cf4bab18844f5f2909f838",
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Filter tasks by status (pending, in_progress, done)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "pending",
+                                "in_progress",
+                                "done"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "statusSort",
+                        "in": "query",
+                        "description": "Sort by status (asc or desc)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of tasks",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Task"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Create a new task",
+                "operationId": "40b928925b45cc79ee4b20546c15051d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TaskCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Task created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Task"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "/tasks/{task}": {
+            "get": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Get task by ID",
+                "operationId": "a91b9ca513bdcb1993ecedf8eeb57573",
+                "parameters": [
+                    {
+                        "name": "task",
+                        "in": "path",
+                        "description": "Task ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Task retrieved",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Task"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Task not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Update a task",
+                "operationId": "4e14c4a849596491422084fd3f1e3c35",
+                "parameters": [
+                    {
+                        "name": "task",
+                        "in": "path",
+                        "description": "Task ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TaskUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Task updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Task"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Tasks"
+                ],
+                "summary": "Delete a task",
+                "operationId": "15ada9293b168626a9bb77363bcc0b74",
+                "parameters": [
+                    {
+                        "name": "task",
+                        "in": "path",
+                        "description": "Task ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Task deleted"
+                    },
+                    "404": {
+                        "description": "Task not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Task": {
+                "required": [
+                    "id",
+                    "title",
+                    "status"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Finish docs"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Write Swagger docs for tasks",
+                        "nullable": true
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "pending",
+                            "in_progress",
+                            "done"
+                        ],
+                        "example": "in_progress"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-07-23T12:34:56Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-07-23T12:34:56Z"
+                    }
+                },
+                "type": "object"
+            },
+            "TaskCreateRequest": {
+                "required": [
+                    "title",
+                    "status"
+                ],
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "Write report"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Q3 performance analysis",
+                        "nullable": true
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "pending",
+                            "in_progress",
+                            "done"
+                        ],
+                        "example": "pending"
+                    }
+                },
+                "type": "object"
+            },
+            "TaskUpdateRequest": {
+                "required": [
+                    "title",
+                    "status"
+                ],
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "Write updated report"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Updated Q3 analysis",
+                        "nullable": true
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "pending",
+                            "in_progress",
+                            "done"
+                        ],
+                        "example": "done"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Tasks",
+            "description": "Task management"
+        }
+    ]
+}
