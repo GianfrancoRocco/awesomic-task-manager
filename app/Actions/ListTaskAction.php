@@ -16,6 +16,7 @@ class ListTaskAction
     {
         return Task::query()
             ->when($data->status, fn (Builder $query, TaskStatus $status) => $query->where('status', $status))
+            ->when($data->statusSort, fn (Builder $query, string $sort) => $query->orderBy('status', $sort))
             ->get();
     }
 }
